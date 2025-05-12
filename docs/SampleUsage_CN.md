@@ -191,5 +191,4 @@ fun registerCustomStrategy() {
     // 实际使用需要扩展 EmotionStrategyManager 以添加此功能
     val customStrategy = ChildFriendlyEmotionStrategy()
     // emotionManager.registerStrategy("child_friendly", customStrategy)
-}
-``` 
+} 

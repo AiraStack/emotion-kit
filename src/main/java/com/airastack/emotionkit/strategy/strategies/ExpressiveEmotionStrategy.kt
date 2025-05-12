@@ -8,15 +8,15 @@ import com.airastack.emotionkit.strategy.EmotionState
 import com.airastack.emotionkit.strategy.EmotionStrategy
 
 /**
- * 情绪化表情策略 - 表情变化更丰富，反应更强烈
+ * Expressive Emotion Strategy - more varied emotional expressions with stronger reactions
  */
 class ExpressiveEmotionStrategy : EmotionStrategy {
-    override val strategyName: String = "情绪化表情策略"
+    override val strategyName: String = "Expressive Emotion Strategy"
     
     override fun getEmotionForState(state: EmotionState): EmotionType {
-        // 情绪表现更加丰富和强烈
+        // More rich and intense emotional expressions
         
-        // 优先级处理特定情况
+        // Priority handling for specific situations
         if (state.isInMaintenanceMode) {
             return EmotionType.REPAIR
         }
@@ -29,17 +29,17 @@ class ExpressiveEmotionStrategy : EmotionStrategy {
             return if (state.isCharging == true) EmotionType.SATISFIED else EmotionType.PANIC
         }
         
-        // 一般情况处理，表情更加情绪化
+        // General case handling, more emotional expressions
         return when {
             state.userInteraction == UserInteractionType.GREETING -> EmotionType.HAPPY
-            state.userInteraction == UserInteractionType.QUESTION -> EmotionType.SUSPICIOUS // 更好奇
-            state.userInteraction == UserInteractionType.COMPLEX_QUERY -> EmotionType.PANIC // 更紧张
-            state.userInteraction == UserInteractionType.APPRECIATION -> EmotionType.HAPPY // 更高兴
+            state.userInteraction == UserInteractionType.QUESTION -> EmotionType.SUSPICIOUS // More curious
+            state.userInteraction == UserInteractionType.COMPLEX_QUERY -> EmotionType.PANIC // More nervous
+            state.userInteraction == UserInteractionType.APPRECIATION -> EmotionType.HAPPY // More joyful
             
-            state.taskSuccess == true -> EmotionType.HAPPY // 总是非常高兴
-            state.taskSuccess == false -> EmotionType.SUSPICIOUS // 总是明显不满
+            state.taskSuccess == true -> EmotionType.HAPPY // Always very happy
+            state.taskSuccess == false -> EmotionType.SUSPICIOUS // Always visibly dissatisfied
             
-            state.environmentType == EnvironmentType.UNFAMILIAR -> EmotionType.PANIC // 更害怕陌生环境
+            state.environmentType == EnvironmentType.UNFAMILIAR -> EmotionType.PANIC // More afraid of unfamiliar environments
             state.environmentType == EnvironmentType.OPTIMAL -> EmotionType.HAPPY
             
             else -> state.currentEmotion

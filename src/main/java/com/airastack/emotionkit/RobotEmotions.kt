@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
  * A utility class that provides access to robot emotion vectors
  */
 object RobotEmotions {
-    // 定义机器人的统一青蓝色
+    // Define unified cyan-blue color for the robot
     private val robotCyanBlue = Color(0xFF00CCFF)
     
     /**
@@ -30,7 +30,7 @@ object RobotEmotions {
         }
     }
 
-    // 怀疑/不满/生气
+    // Suspicious/Dissatisfied/Angry
     val suspiciousFace = ImageVector.Builder(
         name = "RobotSuspiciousFace",
         defaultWidth = 128.dp,
@@ -38,28 +38,28 @@ object RobotEmotions {
         viewportWidth = 128f,
         viewportHeight = 128f
     ).apply {
-        // 面罩（黑色）
+        // Face mask (black)
         path(
             fill = SolidColor(Color.Black)
         ) {
             RoundRect(Rect(16f, 16f, 112f, 96f), 16f, 16f)
         }
 
-        // 左眼（小方块）
+        // Left eye (small square)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
             Rect(44f, 48f, 52f, 56f)
         }
 
-        // 右眼（小方块）
+        // Right eye (small square)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
             Rect(72f, 48f, 80f, 56f)
         }
 
-        // 眉毛（斜线）- 生气的表情
+        // Eyebrows (diagonal lines) - angry expression
         path(
             stroke = SolidColor(robotCyanBlue),
             strokeLineWidth = 3f
@@ -76,7 +76,7 @@ object RobotEmotions {
             lineTo(86f, 44f)
         }
 
-        // 嘴巴（不高兴的线）
+        // Mouth (unhappy line)
         path(
             stroke = SolidColor(robotCyanBlue),
             strokeLineWidth = 3f
@@ -86,7 +86,7 @@ object RobotEmotions {
         }
     }.build()
 
-    // 开心/友善
+    // Happy/Friendly
     val happyFace = ImageVector.Builder(
         name = "RobotHappyFace",
         defaultWidth = 128.dp,
@@ -94,14 +94,14 @@ object RobotEmotions {
         viewportWidth = 128f,
         viewportHeight = 128f
     ).apply {
-        // 面罩（黑色）
+        // Face mask (black)
         path(
             fill = SolidColor(Color.Black)
         ) {
             RoundRect(Rect(16f, 16f, 112f, 96f), 16f, 16f)
         }
 
-        // 左眼（圆形）
+        // Left eye (circular)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -112,7 +112,7 @@ object RobotEmotions {
             close()
         }
 
-        // 右眼（圆形）
+        // Right eye (circular)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -123,7 +123,7 @@ object RobotEmotions {
             close()
         }
 
-        // 嘴巴（微笑 - 使用多个线段模拟曲线）
+        // Mouth (smile - simulating curve with multiple line segments)
         path(
             stroke = SolidColor(robotCyanBlue),
             strokeLineWidth = 3f
@@ -136,7 +136,7 @@ object RobotEmotions {
         }
     }.build()
 
-    // 满意/平和
+    // Satisfied/Calm
     val satisfiedFace = ImageVector.Builder(
         name = "RobotSatisfiedFace",
         defaultWidth = 128.dp,
@@ -144,14 +144,14 @@ object RobotEmotions {
         viewportWidth = 128f,
         viewportHeight = 128f
     ).apply {
-        // 面罩（黑色）
+        // Face mask (black)
         path(
             fill = SolidColor(Color.Black)
         ) {
             RoundRect(Rect(16f, 16f, 112f, 96f), 16f, 16f)
         }
 
-        // 左眼（圆形）
+        // Left eye (circular)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -162,7 +162,7 @@ object RobotEmotions {
             close()
         }
 
-        // 右眼（圆形）
+        // Right eye (circular)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -173,7 +173,7 @@ object RobotEmotions {
             close()
         }
 
-        // 嘴巴（平和微笑 - 使用多个线段模拟轻微曲线）
+        // Mouth (mild smile - simulating slight curve with multiple line segments)
         path(
             stroke = SolidColor(robotCyanBlue),
             strokeLineWidth = 3f
@@ -186,7 +186,7 @@ object RobotEmotions {
         }
     }.build()
 
-    // 中性/待机
+    // Neutral/Standby
     val neutralFace = ImageVector.Builder(
         name = "RobotNeutralFace",
         defaultWidth = 128.dp,
@@ -194,28 +194,28 @@ object RobotEmotions {
         viewportWidth = 128f,
         viewportHeight = 128f
     ).apply {
-        // 面罩（黑色）
+        // Face mask (black)
         path(
             fill = SolidColor(Color.Black)
         ) {
             RoundRect(Rect(16f, 16f, 112f, 96f), 16f, 16f)
         }
 
-        // 左眼（方形，白色表示待机状态）
+        // Left eye (square, blue for standby state)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
             Rect(44f, 48f, 52f, 56f)
         }
 
-        // 右眼（方形，白色表示待机状态）
+        // Right eye (square, blue for standby state)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
             Rect(72f, 48f, 80f, 56f)
         }
 
-        // 嘴巴（中性线）
+        // Mouth (neutral line)
         path(
             stroke = SolidColor(robotCyanBlue),
             strokeLineWidth = 3f
@@ -225,7 +225,7 @@ object RobotEmotions {
         }
     }.build()
 
-    // 跌落/紧急/惊慌
+    // Panic/Emergency/Alarmed
     val panicFace = ImageVector.Builder(
         name = "RobotPanicFace",
         defaultWidth = 128.dp,
@@ -233,14 +233,14 @@ object RobotEmotions {
         viewportWidth = 128f,
         viewportHeight = 128f
     ).apply {
-        // 面罩（黑色）
+        // Face mask (black)
         path(
             fill = SolidColor(Color.Black)
         ) {
             RoundRect(Rect(16f, 16f, 112f, 96f), 16f, 16f)
         }
 
-        // 左眼（感叹号形状）
+        // Left eye (exclamation mark shape)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -252,7 +252,7 @@ object RobotEmotions {
             close()
         }
 
-        // 右眼（感叹号形状）
+        // Right eye (exclamation mark shape)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -264,7 +264,7 @@ object RobotEmotions {
             close()
         }
 
-        // 嘴巴（惊讶的O形）
+        // Mouth (surprised O shape)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -276,7 +276,7 @@ object RobotEmotions {
         }
     }.build()
 
-    // 清洁/维修状态
+    // Repair/Maintenance
     val repairFace = ImageVector.Builder(
         name = "RobotRepairFace",
         defaultWidth = 128.dp,
@@ -284,14 +284,14 @@ object RobotEmotions {
         viewportWidth = 128f,
         viewportHeight = 128f
     ).apply {
-        // 面罩（黑色）
+        // Face mask (black)
         path(
             fill = SolidColor(Color.Black)
         ) {
             RoundRect(Rect(16f, 16f, 112f, 96f), 16f, 16f)
         }
 
-        // 左眼（扳手形状指示维修）
+        // Left eye (wrench shape for repair)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -299,7 +299,7 @@ object RobotEmotions {
             Rect(44f, 48f, 48f, 60f)
         }
 
-        // 右眼（螺丝刀形状指示维修）
+        // Right eye (screwdriver shape for repair)
         path(
             fill = SolidColor(robotCyanBlue)
         ) {
@@ -307,7 +307,7 @@ object RobotEmotions {
             Rect(78f, 48f, 82f, 60f)
         }
 
-        // 嘴巴（水平条纹表示维修状态）
+        // Mouth (horizontal stripes indicating repair state)
         path(
             stroke = SolidColor(robotCyanBlue),
             strokeLineWidth = 2f

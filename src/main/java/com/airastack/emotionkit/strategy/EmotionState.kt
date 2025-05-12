@@ -7,7 +7,7 @@ import com.airastack.emotionkit.TaskComplexity
 import com.airastack.emotionkit.UserInteractionType
 
 /**
- * 表情状态 - 包含可能影响表情选择的所有因素
+ * Emotion state - contains all factors that may affect emotion selection
  */
 data class EmotionState(
     val userInteraction: UserInteractionType? = null,
@@ -19,5 +19,5 @@ data class EmotionState(
     val isCharging: Boolean? = null,
     val isInMaintenanceMode: Boolean = false,
     val currentEmotion: EmotionType = EmotionType.NEUTRAL,
-    // 可以根据需要扩展其他状态因素
+    // Can be extended with other state factors as needed
 ) 

@@ -8,27 +8,27 @@ import com.airastack.emotionkit.strategy.EmotionState
 import com.airastack.emotionkit.strategy.EmotionStrategy
 
 /**
- * 保守表情策略 - 偏向使用中性表情，不轻易显示极端情绪
+ * Conservative Emotion Strategy - tends to use neutral emotions, avoiding extreme expressions
  */
 class ConservativeEmotionStrategy : EmotionStrategy {
-    override val strategyName: String = "保守表情策略"
+    override val strategyName: String = "Conservative Emotion Strategy"
     
     override fun getEmotionForState(state: EmotionState): EmotionType {
-        // 即使在特殊情况下，也保持更加保守的表情
+        // Even in special cases, maintain more conservative expressions
         
-        // 维护模式是必须的
+        // Maintenance mode is necessary
         if (state.isInMaintenanceMode) {
             return EmotionType.REPAIR
         }
         
-        // 其他情况更倾向于使用中性或满意表情
+        // Other cases tend to use neutral or satisfied emotions
         return when {
-            state.systemStatus == SystemStatusType.ERROR -> EmotionType.SUSPICIOUS  // 不使用PANIC
-            state.userInteraction == UserInteractionType.GREETING -> EmotionType.SATISFIED // 不使用HAPPY
+            state.systemStatus == SystemStatusType.ERROR -> EmotionType.SUSPICIOUS  // Doesn't use PANIC
+            state.userInteraction == UserInteractionType.GREETING -> EmotionType.SATISFIED // Doesn't use HAPPY
             state.userInteraction == UserInteractionType.APPRECIATION -> EmotionType.SATISFIED
             state.taskSuccess == true -> EmotionType.SATISFIED
-            state.taskSuccess == false -> EmotionType.NEUTRAL // 失败也不表现得太明显
-            state.environmentType == EnvironmentType.HAZARDOUS -> EmotionType.SUSPICIOUS // 不使用PANIC
+            state.taskSuccess == false -> EmotionType.NEUTRAL // Doesn't show failure too obviously
+            state.environmentType == EnvironmentType.HAZARDOUS -> EmotionType.SUSPICIOUS // Doesn't use PANIC
             else -> EmotionType.NEUTRAL
         }
     }

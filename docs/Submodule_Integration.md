@@ -1,26 +1,27 @@
-# 作为 Submodule 集成
+# Submodule Integration
 
-本文档说明如何将 emotion-kit 作为子模块集成到主项目中。
+This document explains how to integrate emotion-kit as a submodule into your main project. 
+> **Note**: For Chinese documentation, please see [Submodule_Integration_CN.md](Submodule_Integration_CN.md)
 
-## 1. 添加子模块
+## 1. Add Submodule
 
-在主项目的根目录下执行：
+Execute in the root directory of the main project:
 
 ```bash
 git submodule add https://github.com/AiraStack/emotion-kit.git
 ```
 
-## 2. 更新 settings.gradle.kts
+## 2. Update settings.gradle.kts
 
-在主项目的 settings.gradle.kts 中添加：
+Add to the main project's settings.gradle.kts:
 
 ```kotlin
 include(":emotion-kit")
 ```
 
-## 3. 添加依赖
+## 3. Add Dependency
 
-在主项目应用模块的 build.gradle.kts 中添加依赖：
+Add dependency in the main project's application module build.gradle.kts:
 
 ```kotlin
 dependencies {
@@ -28,9 +29,9 @@ dependencies {
 }
 ```
 
-## 4. 导入并使用
+## 4. Import and Use
 
-在主项目的代码中导入并使用 emotion-kit：
+Import and use emotion-kit in the main project's code:
 
 ```kotlin
 import com.airastack.emotionkit.EmotionType
@@ -41,12 +42,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // 获取表情管理器
+        // Get emotion manager
         val emotionManager = EmotionStrategyManager.getInstance()
         
         setContent {
             YourTheme {
-                // 使用表情管理器
+                // Use emotion manager
                 RobotInterface(emotionManager)
             }
         }
@@ -55,46 +56,46 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun RobotInterface(emotionManager: EmotionStrategyManager) {
-    // 获取当前表情
+    // Get current emotion
     val currentEmotion by emotionManager.currentEmotion
     
-    // 使用表情
+    // Use emotion
     Image(
         imageVector = emotionManager.getCurrentEmotionVector(),
         contentDescription = "Robot face"
     )
     
-    // 其他界面元素...
+    // Other interface elements...
 }
 ```
 
-## 5. 更新子模块
+## 5. Update Submodule
 
-当子模块有更新时，在主项目中执行：
+When the submodule has updates, execute in the main project:
 
 ```bash
 git submodule update --remote --merge
 ```
 
-## 6. 子模块开发
+## 6. Submodule Development
 
-如果需要同时开发主项目和子模块，可以：
+If you need to develop the main project and submodule simultaneously:
 
-1. 切换到子模块目录：
+1. Switch to the submodule directory:
    ```bash
    cd emotion-kit
    ```
 
-2. 切换到适当的分支：
+2. Switch to the appropriate branch:
    ```bash
-   git checkout main  # 或其他适当的分支
+   git checkout main  # or other appropriate branch
    ```
 
-3. 进行修改并提交
+3. Make changes and commit
 
-4. 返回主项目并更新引用：
+4. Return to the main project and update the reference:
    ```bash
    cd ..
    git add emotion-kit
-   git commit -m "更新子模块引用"
-   ``` 
+   git commit -m "Update submodule reference"
+   ```

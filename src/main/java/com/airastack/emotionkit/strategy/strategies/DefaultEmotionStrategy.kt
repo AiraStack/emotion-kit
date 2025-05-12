@@ -9,44 +9,44 @@ import com.airastack.emotionkit.strategy.EmotionState
 import com.airastack.emotionkit.strategy.EmotionStrategy
 
 /**
- * 默认表情策略 - 基于当前状态的直接映射
+ * Default Emotion Strategy - direct mapping based on current state
  */
 class DefaultEmotionStrategy : EmotionStrategy {
-    override val strategyName: String = "默认表情策略"
+    override val strategyName: String = "Default Emotion Strategy"
     
     override fun getEmotionForState(state: EmotionState): EmotionType {
-        // 优先级处理
+        // Priority processing
         
-        // 1. 如果在维护模式
+        // 1. If in maintenance mode
         if (state.isInMaintenanceMode) {
             return EmotionType.REPAIR
         }
         
-        // 2. 如果系统状态是错误状态
+        // 2. If system status is error
         if (state.systemStatus == SystemStatusType.ERROR) {
             return EmotionType.PANIC
         }
         
-        // 3. 如果电池电量低且不在充电
+        // 3. If battery level is low and not charging
         if (state.batteryLevel != null && state.batteryLevel < 15 && state.isCharging == false) {
             return EmotionType.SUSPICIOUS
         }
         
-        // 4. 处理其他普通状态
+        // 4. Handle other normal states
         return when {
-            // 用户交互优先
+            // User interaction has priority
             state.userInteraction != null -> handleUserInteraction(state.userInteraction)
             
-            // 系统状态次之
+            // System status comes second
             state.systemStatus != null -> handleSystemStatus(state.systemStatus)
             
-            // 任务完成状态
+            // Task completion status
             state.taskSuccess != null -> handleTaskCompletion(state.taskSuccess, state.taskComplexity ?: TaskComplexity.MEDIUM)
             
-            // 环境状态
+            // Environment status
             state.environmentType != null -> handleEnvironment(state.environmentType)
             
-            // 默认情况保持当前表情
+            // Default case: keep current emotion
             else -> state.currentEmotion
         }
     }
