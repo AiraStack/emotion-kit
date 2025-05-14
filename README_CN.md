@@ -149,3 +149,62 @@ fun RobotEmotionsScreen() {
 ## 许可证
 
 Apache License 
+
+## 从 yuanyin 项目迁移
+
+本库包含了从 yuanyin 项目迁移过来的情绪管理核心功能，主要包括：
+
+1. **情绪策略系统**：
+   - 默认策略（DefaultEmotionStrategy）
+   - 保守策略（ConservativeEmotionStrategy）
+   - 情绪化策略（ExpressiveEmotionStrategy）
+
+2. **情绪状态管理**：
+   - 策略管理器（EmotionStrategyManager）
+   - 情绪状态（EmotionState）
+
+3. **简单情绪管理器**：
+   - SimpleEmotionManager - 不依赖策略系统的简化版情绪管理器
+
+### 迁移说明
+
+如果您之前在使用 yuanyin 项目，可以通过以下方式迁移到 emotion-kit：
+
+1. 将 yuanyin 中的情绪管理相关代码替换为 emotion-kit 中的相应功能：
+
+   ```kotlin
+   // 原来在 yuanyin 中使用
+   val emotionManager = RobotEmotionManager.getInstance()
+   emotionManager.handleUserInteraction(UserInteractionType.GREETING)
+   
+   // 现在在 emotion-kit 中使用
+   // 方式1：使用情绪连接器（推荐）
+   EmotionConnector.handleUserInteraction(UserInteractionType.GREETING)
+   
+   // 方式2：使用策略管理器
+   val strategyManager = EmotionStrategyManager.getInstance()
+   strategyManager.updateUserInteraction(UserInteractionType.GREETING)
+   
+   // 方式3：使用简单情绪管理器
+   val simpleManager = SimpleEmotionManager.getInstance()
+   simpleManager.handleUserInteraction(UserInteractionType.GREETING)
+   ```
+
+2. 所有枚举类和业务场景都保持一致：
+   - EmotionType
+   - UserInteractionType
+   - SystemStatusType
+   - TaskComplexity
+   - EnvironmentType
+
+3. 获取情绪表情：
+   ```kotlin
+   // 获取当前情绪矢量图
+   val emotionVector = EmotionConnector.getCurrentEmotionVector()
+   
+   // 显示在 Compose 中
+   Image(
+       imageVector = emotionVector,
+       contentDescription = "Robot emotion"
+   )
+   ``` 

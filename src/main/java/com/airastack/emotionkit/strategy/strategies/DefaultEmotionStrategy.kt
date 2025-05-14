@@ -9,13 +9,13 @@ import com.airastack.emotionkit.strategy.EmotionState
 import com.airastack.emotionkit.strategy.EmotionStrategy
 
 /**
- * Default Emotion Strategy - direct mapping based on current state
+ * Default emotion strategy - direct mapping based on current state
  */
 class DefaultEmotionStrategy : EmotionStrategy {
     override val strategyName: String = "Default Emotion Strategy"
     
     override fun getEmotionForState(state: EmotionState): EmotionType {
-        // Priority processing
+        // Priority handling
         
         // 1. If in maintenance mode
         if (state.isInMaintenanceMode) {
@@ -34,10 +34,10 @@ class DefaultEmotionStrategy : EmotionStrategy {
         
         // 4. Handle other normal states
         return when {
-            // User interaction has priority
+            // User interaction priority
             state.userInteraction != null -> handleUserInteraction(state.userInteraction)
             
-            // System status comes second
+            // System status next
             state.systemStatus != null -> handleSystemStatus(state.systemStatus)
             
             // Task completion status
@@ -46,7 +46,7 @@ class DefaultEmotionStrategy : EmotionStrategy {
             // Environment status
             state.environmentType != null -> handleEnvironment(state.environmentType)
             
-            // Default case: keep current emotion
+            // Default case: maintain current emotion
             else -> state.currentEmotion
         }
     }

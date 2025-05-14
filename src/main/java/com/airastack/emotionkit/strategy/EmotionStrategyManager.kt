@@ -12,45 +12,45 @@ import com.airastack.emotionkit.strategy.strategies.DefaultEmotionStrategy
 import com.airastack.emotionkit.strategy.strategies.ExpressiveEmotionStrategy
 
 /**
- * Emotion Strategy Manager - responsible for managing different emotion strategies and providing the current emotion
+ * 表情策略管理器 - 负责管理不同的表情策略并提供当前表情
  */
 class EmotionStrategyManager {
-    // List of available strategies
+    // 可用的策略列表
     private val availableStrategies = mapOf(
         "default" to DefaultEmotionStrategy(),
         "conservative" to ConservativeEmotionStrategy(),
         "expressive" to ExpressiveEmotionStrategy()
     )
     
-    // Currently used strategy
+    // 当前使用的策略
     private var currentStrategy = availableStrategies["default"]!!
     
-    // Current emotion state
+    // 当前情绪状态
     private var currentState = EmotionState()
     
-    // Current emotion, observable
+    // 当前表情，可被观察
     val currentEmotion = mutableStateOf(EmotionType.NEUTRAL)
     
     /**
-     * Switch to the specified emotion strategy
+     * 切换到指定的表情策略
      */
     fun switchStrategy(strategyKey: String): Boolean {
         val strategy = availableStrategies[strategyKey] ?: return false
         currentStrategy = strategy
-        // Apply new strategy to current state
+        // 应用新策略到当前状态
         updateEmotion()
         return true
     }
     
     /**
-     * Get current strategy name
+     * 获取当前策略名称
      */
     fun getCurrentStrategyName(): String {
         return currentStrategy.strategyName
     }
     
     /**
-     * Get names and keys of all available strategies
+     * 获取所有可用策略的名称和键
      */
     fun getAvailableStrategies(): List<Pair<String, String>> {
         return availableStrategies.map { (key, strategy) -> 
@@ -59,10 +59,10 @@ class EmotionStrategyManager {
     }
     
     /**
-     * Update emotion state and apply current strategy
+     * 更新表情状态并应用当前策略
      */
     private fun updateEmotion() {
-        // Update current emotion
+        // 更新当前表情
         val newEmotion = currentStrategy.getEmotionForState(currentState.copy(
             currentEmotion = currentEmotion.value
         ))
@@ -73,27 +73,27 @@ class EmotionStrategyManager {
     }
     
     /**
-     * Get the ImageVector for the current emotion
+     * 获取当前表情的ImageVector
      */
     fun getCurrentEmotionVector() = RobotEmotions.getEmotion(currentEmotion.value)
     
     /**
-     * Methods for updating various states below
+     * 下面是各种更新状态的方法
      */
     
-    // Update user interaction state
+    // 更新用户交互状态
     fun updateUserInteraction(interaction: UserInteractionType?) {
         currentState = currentState.copy(userInteraction = interaction)
         updateEmotion()
     }
     
-    // Update system status
+    // 更新系统状态
     fun updateSystemStatus(status: SystemStatusType?) {
         currentState = currentState.copy(systemStatus = status)
         updateEmotion()
     }
     
-    // Update task completion status
+    // 更新任务完成状态
     fun updateTaskCompletion(success: Boolean?, complexity: TaskComplexity = TaskComplexity.MEDIUM) {
         currentState = currentState.copy(
             taskSuccess = success,
@@ -102,13 +102,13 @@ class EmotionStrategyManager {
         updateEmotion()
     }
     
-    // Update environment status
+    // 更新环境状态
     fun updateEnvironment(environment: EnvironmentType?) {
         currentState = currentState.copy(environmentType = environment)
         updateEmotion()
     }
     
-    // Update battery status
+    // 更新电池状态
     fun updateBatteryStatus(level: Int?, isCharging: Boolean?) {
         currentState = currentState.copy(
             batteryLevel = level,
@@ -117,25 +117,25 @@ class EmotionStrategyManager {
         updateEmotion()
     }
     
-    // Update maintenance mode
+    // 更新维护模式
     fun setMaintenanceMode(inMaintenance: Boolean) {
         currentState = currentState.copy(isInMaintenanceMode = inMaintenance)
         updateEmotion()
     }
     
-    // Reset all states
+    // 重置所有状态
     fun resetState() {
         currentState = EmotionState()
         updateEmotion()
     }
     
-    // Directly set emotion (override strategy)
+    // 直接设置表情（覆盖策略）
     fun setEmotion(emotionType: EmotionType) {
         currentEmotion.value = emotionType
     }
     
     companion object {
-        // Singleton pattern
+        // 单例模式
         private var instance: EmotionStrategyManager? = null
         
         fun getInstance(): EmotionStrategyManager {
