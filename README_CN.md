@@ -17,7 +17,7 @@ AI 机器人表情管理库，提供了一套灵活的表情系统，可以根�
 
 ```bash
 # 添加为子模块
-git submodule add https://github.com/AiraStack/emotion-kit.git
+git submodule add https://github.com/releaseT/emotion-kit.git
 
 # 在 settings.gradle.kts 中引入
 include(":emotion-kit")

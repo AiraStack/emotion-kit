@@ -1,5 +1,6 @@
 package com.airastack.emotionkit
 
+import android.content.Context
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
@@ -8,18 +9,37 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
+import com.airastack.emotionkit.image.EmotionImageLoader
 
 /**
  * A utility class that provides access to robot emotion vectors
+ * Uses SVG images from assets with vector graphics as fallback
  */
 object RobotEmotions {
-    // Define unified cyan-blue color for the robot
-    private val robotCyanBlue = Color(0xFF00CCFF)
+    private var context: Context? = null
+    
+    /**
+     * Initialize the RobotEmotions with application context
+     * This should be called once when the application starts
+     */
+    fun initialize(context: Context) {
+        this.context = context.applicationContext
+    }
     
     /**
      * Gets the appropriate emotion vector based on the emotion type
+     * This will try to load the SVG image first, falling back to vector graphics if needed
      */
     fun getEmotion(emotionType: EmotionType): ImageVector {
+        val ctx = context ?: throw IllegalStateException("RobotEmotions not initialized. Call initialize() first.")
+        return EmotionImageLoader.loadEmotionImage(ctx, emotionType)
+    }
+
+    /**
+     * Gets the fallback vector graphics for the given emotion type
+     * This is used when SVG loading fails
+     */
+    internal fun getFallbackEmotion(emotionType: EmotionType): ImageVector {
         return when (emotionType) {
             EmotionType.SUSPICIOUS -> suspiciousFace
             EmotionType.HAPPY -> happyFace
@@ -30,6 +50,9 @@ object RobotEmotions {
         }
     }
 
+    // Define unified cyan-blue color for the robot
+    private val robotCyanBlue = Color(0xFF00CCFF)
+    
     // Suspicious/Dissatisfied/Angry
     val suspiciousFace = ImageVector.Builder(
         name = "RobotSuspiciousFace",
