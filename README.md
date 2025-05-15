@@ -10,8 +10,8 @@ AI robot emotion management library that provides a flexible emotion system to d
 - Emotion management system based on strategy pattern
 - Three built-in emotion strategies: Default, Conservative, and Expressive
 - Support for multiple business scenarios: User interactions, System status, Task completion, Environment detection, etc.
-- SVG-based emotion images with vector graphics fallback
-- Efficient rendering with Jetpack Compose
+- Unified cyan-blue expression design (0xFF00CCFF)
+- Efficient rendering with Jetpack Compose vector graphics
 
 ## Installation
 
@@ -19,7 +19,7 @@ AI robot emotion management library that provides a flexible emotion system to d
 
 ```bash
 # Add as submodule
-git submodule add https://github.com/releaseT/emotion-kit.git
+git submodule add https://github.com/AiraStack/emotion-kit.git
 
 # Include in settings.gradle.kts
 include(":emotion-kit")
@@ -34,19 +34,6 @@ dependencies {
 ```
 
 ## Quick Start
-
-### Initialize
-
-Before using the emotion system, initialize it with your application context:
-
-```kotlin
-class YourApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        RobotEmotions.initialize(this)
-    }
-}
-```
 
 ### Basic Usage
 
