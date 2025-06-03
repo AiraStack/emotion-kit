@@ -2,6 +2,27 @@
 
 AI 机器人表情管理库，提供了一套灵活的表情系统，可以根据不同的业务场景展示对应的表情。
 
+## 目录结构
+
+```
+emotion-kit/
+  ├── src/
+  │   └── main/
+  │       ├── java/com/airastack/emotionkit/
+  │       │   ├── animation/      # Rive 动画与控制器（原 components/）
+  │       │   ├── strategy/       # 情感策略
+  │       │   ├── theme/          # Compose 主题
+  │       │   ├── sample/         # 示例
+  │       │   ├── EmotionType.kt  # 核心类型
+  │       │   ├── RobotEmotions.kt
+  │       │   └── EmotionScenarios.kt
+  │       └── res/
+  ├── docs/
+  ├── README.md
+  ├── README_CN.md
+  └── LICENSE
+```
+
 ## 功能特性
 
 - 六种基本表情：怀疑/不满/生气、开心/友善、满意/平和、中性/待机、跌落/紧急/惊慌、清洁/维修状态
@@ -33,52 +54,30 @@ dependencies {
 
 ## 快速开始
 
-### 基本使用
-
 ```kotlin
-// 获取情绪管理器实例
+import com.airastack.emotionkit.strategy.EmotionStrategyManager
+import com.airastack.emotionkit.animation.RiveStateController
+
 val emotionManager = EmotionStrategyManager.getInstance()
+val riveController = emotionManager.getRiveController()
 
-// 获取当前表情矢量图
-val emotionVector = emotionManager.getCurrentEmotionVector()
-
-// 使用 Compose 显示表情
-Image(
-    imageVector = emotionVector,
-    contentDescription = "Robot emotion"
+// 在 Compose 中使用
+RiveAnimation(
+    stateController = riveController
 )
 ```
 
-### 更新表情状态
+## Rive 动画示例
 
 ```kotlin
-// 用户交互场景
-emotionManager.updateUserInteraction(UserInteractionType.GREETING)
+import com.airastack.emotionkit.animation.ExampleAnimation
+import com.airastack.emotionkit.animation.ExampleAnimationType
 
-// 系统状态场景
-emotionManager.updateSystemStatus(SystemStatusType.LOW_BATTERY)
-
-// 任务完成场景
-emotionManager.updateTaskCompletion(success = true, complexity = TaskComplexity.HIGH)
-
-// 直接设置表情（覆盖策略）
-emotionManager.setEmotion(EmotionType.HAPPY)
-```
-
-### 切换表情策略
-
-```kotlin
-// 切换到保守表情策略
-emotionManager.switchStrategy("conservative")
-
-// 切换到情绪化表情策略
-emotionManager.switchStrategy("expressive")
-
-// 获取当前策略名称
-val strategyName = emotionManager.getCurrentStrategyName()
-
-// 获取所有可用策略
-val strategies = emotionManager.getAvailableStrategies()
+@Composable
+fun SimpleExample() {
+    val animationType = remember { mutableStateOf<ExampleAnimationType>(ExampleAnimationType.Success) }
+    ExampleAnimation(type = animationType)
+}
 ```
 
 ## 表情策略

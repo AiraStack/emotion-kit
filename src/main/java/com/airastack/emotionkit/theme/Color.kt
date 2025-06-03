@@ -1,4 +1,4 @@
-package com.devbrackets.rive.ui.theme
+package com.airastack.emotionkit.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.devbrackets.rive.components
+package com.airastack.emotionkit.animation
 
 import androidx.annotation.RawRes
 import androidx.compose.foundation.background

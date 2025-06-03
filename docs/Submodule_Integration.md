@@ -37,6 +37,8 @@ Import and use emotion-kit in the main project's code:
 import com.airastack.emotionkit.EmotionType
 import com.airastack.emotionkit.RobotEmotions
 import com.airastack.emotionkit.strategy.EmotionStrategyManager
+import com.airastack.emotionkit.animation.RiveStateController
+import com.airastack.emotionkit.animation.RiveAnimation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,27 +46,26 @@ class MainActivity : ComponentActivity() {
         
         // Get emotion manager
         val emotionManager = EmotionStrategyManager.getInstance()
+        val riveController = emotionManager.getRiveController()
         
         setContent {
             YourTheme {
-                // Use emotion manager
-                RobotInterface(emotionManager)
+                // Use emotion manager and animation
+                RobotInterface(emotionManager, riveController)
             }
         }
     }
 }
 
 @Composable
-fun RobotInterface(emotionManager: EmotionStrategyManager) {
+fun RobotInterface(emotionManager: EmotionStrategyManager, riveController: RiveStateController) {
     // Get current emotion
     val currentEmotion by emotionManager.currentEmotion
     
     // Use emotion
-    Image(
-        imageVector = emotionManager.getCurrentEmotionVector(),
-        contentDescription = "Robot face"
+    RiveAnimation(
+        stateController = riveController
     )
-    
     // Other interface elements...
 }
 ```

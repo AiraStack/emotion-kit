@@ -1,4 +1,4 @@
-package com.devbrackets.rive.sample
+package com.airastack.emotionkit.sample
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.*
@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.devbrackets.rive.components.ExampleAnimation
-import com.devbrackets.rive.components.ExampleAnimationType
+import com.airastack.emotionkit.animation.ExampleAnimation
+import com.airastack.emotionkit.animation.ExampleAnimationType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlin.random.Random

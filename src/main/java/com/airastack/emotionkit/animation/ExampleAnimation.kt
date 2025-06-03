@@ -1,8 +1,8 @@
-package com.devbrackets.rive.components
+package com.airastack.emotionkit.animation
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.devbrackets.rive.R
+import com.airastack.emotionkit.R
 
 /**
  * Serves as an example on how to integrate the [RiveStateController] with the
@@ -17,7 +17,7 @@ import com.devbrackets.rive.R
  * where you want to emit intermediate states beyond just the starting/ending [ExampleAnimationType]
  */
 @Composable
-internal fun ExampleAnimation(
+public fun ExampleAnimation(
     type: State<ExampleAnimationType>,
     modifier: Modifier = Modifier,
     onStateChanged: (ExampleAnimationState) -> Unit = {},

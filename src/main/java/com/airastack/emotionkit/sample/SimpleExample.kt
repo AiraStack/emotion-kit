@@ -1,4 +1,4 @@
-package com.devbrackets.rive.sample
+package com.airastack.emotionkit.sample
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -13,8 +13,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.devbrackets.rive.components.ExampleAnimation
-import com.devbrackets.rive.components.ExampleAnimationType
+import com.airastack.emotionkit.animation.ExampleAnimation
+import com.airastack.emotionkit.animation.ExampleAnimationType
 
 @Composable
 fun SimpleExample() {

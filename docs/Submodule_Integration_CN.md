@@ -36,6 +36,8 @@ dependencies {
 import com.airastack.emotionkit.EmotionType
 import com.airastack.emotionkit.RobotEmotions
 import com.airastack.emotionkit.strategy.EmotionStrategyManager
+import com.airastack.emotionkit.animation.RiveStateController
+import com.airastack.emotionkit.animation.RiveAnimation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,27 +45,26 @@ class MainActivity : ComponentActivity() {
         
         // 获取表情管理器
         val emotionManager = EmotionStrategyManager.getInstance()
+        val riveController = emotionManager.getRiveController()
         
         setContent {
             YourTheme {
-                // 使用表情管理器
-                RobotInterface(emotionManager)
+                // 使用表情管理器和动画
+                RobotInterface(emotionManager, riveController)
             }
         }
     }
 }
 
 @Composable
-fun RobotInterface(emotionManager: EmotionStrategyManager) {
+fun RobotInterface(emotionManager: EmotionStrategyManager, riveController: RiveStateController) {
     // 获取当前表情
     val currentEmotion by emotionManager.currentEmotion
     
-    // 使用表情
-    Image(
-        imageVector = emotionManager.getCurrentEmotionVector(),
-        contentDescription = "Robot face"
+    // 使用动画
+    RiveAnimation(
+        stateController = riveController
     )
-    
     // 其他界面元素...
 }
 ```

@@ -1,4 +1,4 @@
-package com.devbrackets.rive.components
+package com.airastack.emotionkit.animation
 
 import android.util.Log
 import androidx.compose.runtime.Stable
@@ -12,6 +12,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import com.airastack.emotionkit.EmotionType
 import com.airastack.emotionkit.toRiveState
+import kotlinx.coroutines.withTimeout
 
 /**
  * Provides a mechanism for controlling a [RiveAnimationView] that is more Compose friendly
@@ -180,7 +181,13 @@ class RiveStateController {
      * emission, or only null emissions, are received then a `null` value will be returned.
      */
     private suspend fun <T> Flow<T?>.tryNonNull(timeout: Duration): T? {
-        return filter { it != null }.timeout(timeout).catch { emit(null) }.firstOrNull()
+        return try {
+            withTimeout(timeout.inWholeMilliseconds) {
+                filter { it != null }.firstOrNull()
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 
     /**
@@ -212,7 +219,7 @@ class RiveStateController {
 
     fun setEmotion(emotion: EmotionType) {
         val riveState = emotion.toRiveState()
-        changeState(riveState)
+        // changeState(riveState) // TODO: Implement this if needed
     }
 
     companion object  {

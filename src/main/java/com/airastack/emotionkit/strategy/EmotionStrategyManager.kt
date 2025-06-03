@@ -7,7 +7,7 @@ import com.airastack.emotionkit.RobotEmotions
 import com.airastack.emotionkit.SystemStatusType
 import com.airastack.emotionkit.TaskComplexity
 import com.airastack.emotionkit.UserInteractionType
-import com.airastack.emotionkit.components.RiveStateController
+import com.airastack.emotionkit.animation.RiveStateController
 import com.airastack.emotionkit.strategy.strategies.ConservativeEmotionStrategy
 import com.airastack.emotionkit.strategy.strategies.DefaultEmotionStrategy
 import com.airastack.emotionkit.strategy.strategies.ExpressiveEmotionStrategy
@@ -33,7 +33,7 @@ class EmotionStrategyManager private constructor() {
     val currentEmotion = mutableStateOf(EmotionType.NEUTRAL)
 
     // Global Rive controller singleton
-    private val riveController = RiveStateController
+    private val riveController = RiveStateController()
     
     /**
      * Switch to the specified emotion strategy

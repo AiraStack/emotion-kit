@@ -12,6 +12,28 @@ AI robot emotion management library that provides a flexible emotion system to d
 - Support for multiple business scenarios: User interactions, System status, Task completion, Environment detection, etc.
 - Unified cyan-blue expression design (0xFF00CCFF)
 - Efficient rendering with Jetpack Compose vector graphics
+- **Rive animation support via `animation` package**
+
+## Directory Structure
+
+```
+emotion-kit/
+  ├── src/
+  │   └── main/
+  │       ├── java/com/airastack/emotionkit/
+  │       │   ├── animation/      # Rive animation & controller (was components/)
+  │       │   ├── strategy/       # Emotion strategies
+  │       │   ├── theme/          # Compose theme
+  │       │   ├── sample/         # Usage samples
+  │       │   ├── EmotionType.kt  # Core types
+  │       │   ├── RobotEmotions.kt
+  │       │   └── EmotionScenarios.kt
+  │       └── res/
+  ├── docs/
+  ├── README.md
+  ├── README_CN.md
+  └── LICENSE
+```
 
 ## Installation
 
@@ -38,16 +60,15 @@ dependencies {
 ### Basic Usage
 
 ```kotlin
-// Get emotion manager instance
+import com.airastack.emotionkit.strategy.EmotionStrategyManager
+import com.airastack.emotionkit.animation.RiveStateController
+
 val emotionManager = EmotionStrategyManager.getInstance()
+val riveController = emotionManager.getRiveController()
 
-// Get current emotion vector
-val emotionVector = emotionManager.getCurrentEmotionVector()
-
-// Display emotion using Compose
-Image(
-    imageVector = emotionVector,
-    contentDescription = "Robot emotion"
+// In Compose
+RiveAnimation(
+    stateController = riveController
 )
 ```
 
@@ -81,6 +102,19 @@ val strategyName = emotionManager.getCurrentStrategyName()
 
 // Get all available strategies
 val strategies = emotionManager.getAvailableStrategies()
+```
+
+## Rive Animation Example
+
+```kotlin
+import com.airastack.emotionkit.animation.ExampleAnimation
+import com.airastack.emotionkit.animation.ExampleAnimationType
+
+@Composable
+fun SimpleExample() {
+    val animationType = remember { mutableStateOf<ExampleAnimationType>(ExampleAnimationType.Success) }
+    ExampleAnimation(type = animationType)
+}
 ```
 
 ## Emotion Strategies

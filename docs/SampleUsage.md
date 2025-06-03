@@ -1,8 +1,14 @@
 # emotion-kit Usage Examples
 
+> **Note:** The `animation` package replaces the previous `components` package. All animation-related imports should use `com.airastack.emotionkit.animation.*`.
+
 ## Using in Activity or Fragment
 
 ```kotlin
+import com.airastack.emotionkit.strategy.EmotionStrategyManager
+import com.airastack.emotionkit.animation.RiveStateController
+import com.airastack.emotionkit.animation.RiveAnimation
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +39,7 @@ fun RobotEmotionDemo(
     ) {
         // Display Rive animation based on current emotion
         RiveAnimation(
-            controller = riveController,
+            stateController = riveController,
             modifier = Modifier.size(200.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -100,13 +106,13 @@ fun RobotEmotionDemo(
 ```kotlin
 val emotionManager = EmotionStrategyManager.getInstance()
 val riveController = emotionManager.getRiveController()
-RiveAnimation(controller = riveController)
+RiveAnimation(stateController = riveController)
 ```
 
 - When you call any of the following, the Rive animation will automatically update:
     - `emotionManager.setEmotion(EmotionType.HAPPY)`
     - `emotionManager.switchStrategy(...)`
-    - `emotionManager.updateUserInteraction(...)` 等
+    - `emotionManager.updateUserInteraction(...)` etc.
 
 - The mapping between `EmotionType` and Rive state is handled automatically. You only need to use the high-level API.
 
