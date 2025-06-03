@@ -7,6 +7,7 @@ import com.airastack.emotionkit.RobotEmotions
 import com.airastack.emotionkit.SystemStatusType
 import com.airastack.emotionkit.TaskComplexity
 import com.airastack.emotionkit.UserInteractionType
+import com.airastack.emotionkit.components.RiveStateController
 import com.airastack.emotionkit.strategy.strategies.ConservativeEmotionStrategy
 import com.airastack.emotionkit.strategy.strategies.DefaultEmotionStrategy
 import com.airastack.emotionkit.strategy.strategies.ExpressiveEmotionStrategy
@@ -14,7 +15,7 @@ import com.airastack.emotionkit.strategy.strategies.ExpressiveEmotionStrategy
 /**
  * Emotion Strategy Manager - responsible for managing different emotion strategies and providing the current emotion
  */
-class EmotionStrategyManager {
+class EmotionStrategyManager private constructor() {
     // List of available strategies
     private val availableStrategies = mapOf(
         "default" to DefaultEmotionStrategy(),
@@ -30,6 +31,9 @@ class EmotionStrategyManager {
     
     // Current emotion, observable
     val currentEmotion = mutableStateOf(EmotionType.NEUTRAL)
+
+    // Global Rive controller singleton
+    private val riveController = RiveStateController
     
     /**
      * Switch to the specified emotion strategy
@@ -66,9 +70,8 @@ class EmotionStrategyManager {
         val newEmotion = currentStrategy.getEmotionForState(currentState.copy(
             currentEmotion = currentEmotion.value
         ))
-        
         if (newEmotion != currentEmotion.value) {
-            currentEmotion.value = newEmotion
+            setEmotion(newEmotion)
         }
     }
     
@@ -129,10 +132,14 @@ class EmotionStrategyManager {
         updateEmotion()
     }
     
-    // Directly set emotion (override strategy)
+    // Directly set emotion (override strategy) and sync Rive
     fun setEmotion(emotionType: EmotionType) {
         currentEmotion.value = emotionType
+        riveController.setEmotion(emotionType)
     }
+
+    // Get the global Rive controller for UI
+    fun getRiveController(): RiveStateController = riveController
     
     companion object {
         // Singleton pattern

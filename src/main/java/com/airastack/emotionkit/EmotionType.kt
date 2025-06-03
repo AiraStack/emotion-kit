@@ -10,4 +10,13 @@ enum class EmotionType {
     NEUTRAL,    // Neutral/Standby
     PANIC,      // Panic/Emergency/Alarmed
     REPAIR      // Repair/Maintenance
+}
+
+fun EmotionType.toRiveState(): String = when (this) {
+    EmotionType.SUSPICIOUS -> "suspicious"
+    EmotionType.HAPPY -> "happy"
+    EmotionType.SATISFIED -> "satisfied"
+    EmotionType.NEUTRAL -> "neutral"
+    EmotionType.PANIC -> "panic"
+    EmotionType.REPAIR -> "repair"
 } 

@@ -9,17 +9,21 @@ class MainActivity : ComponentActivity() {
         
         // Get emotion manager instance
         val emotionManager = EmotionStrategyManager.getInstance()
+        val riveController = emotionManager.getRiveController()
         
         setContent {
             MyTheme {
-                RobotEmotionDemo(emotionManager)
+                RobotEmotionDemo(emotionManager, riveController)
             }
         }
     }
 }
 
 @Composable
-fun RobotEmotionDemo(emotionManager: EmotionStrategyManager) {
+fun RobotEmotionDemo(
+    emotionManager: EmotionStrategyManager,
+    riveController: RiveStateController
+) {
     // Observe current emotion state
     val currentEmotion by emotionManager.currentEmotion
     
@@ -27,15 +31,12 @@ fun RobotEmotionDemo(emotionManager: EmotionStrategyManager) {
         modifier = Modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Display current robot emotion
-        Image(
-            imageVector = emotionManager.getCurrentEmotionVector(),
-            contentDescription = "Robot emotion",
-            modifier = Modifier.size(120.dp)
+        // Display Rive animation based on current emotion
+        RiveAnimation(
+            controller = riveController,
+            modifier = Modifier.size(200.dp)
         )
-        
         Spacer(modifier = Modifier.height(24.dp))
-        
         // Switch between different emotions
         Text("Select emotion strategy:", style = MaterialTheme.typography.titleMedium)
         Row(
@@ -45,35 +46,28 @@ fun RobotEmotionDemo(emotionManager: EmotionStrategyManager) {
             Button(onClick = { emotionManager.switchStrategy("default") }) {
                 Text("Default Strategy")
             }
-            
             Button(onClick = { emotionManager.switchStrategy("conservative") }) {
                 Text("Conservative Strategy")
             }
-            
             Button(onClick = { emotionManager.switchStrategy("expressive") }) {
                 Text("Expressive Strategy")
             }
         }
-        
         Spacer(modifier = Modifier.height(24.dp))
-        
         // Simulate different scenarios
         Text("Simulate scenarios:", style = MaterialTheme.typography.titleMedium)
-        
         Button(
             onClick = { emotionManager.updateUserInteraction(UserInteractionType.GREETING) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("User Greeting")
         }
-        
         Button(
             onClick = { emotionManager.updateSystemStatus(SystemStatusType.LOW_BATTERY) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Low Battery Status")
         }
-        
         Button(
             onClick = { 
                 emotionManager.updateTaskCompletion(true, TaskComplexity.HIGH) 
@@ -82,14 +76,12 @@ fun RobotEmotionDemo(emotionManager: EmotionStrategyManager) {
         ) {
             Text("Complete Complex Task")
         }
-        
         Button(
             onClick = { emotionManager.setMaintenanceMode(true) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Enter Maintenance Mode")
         }
-        
         Button(
             onClick = { emotionManager.resetState() },
             modifier = Modifier.fillMaxWidth()
@@ -100,53 +92,33 @@ fun RobotEmotionDemo(emotionManager: EmotionStrategyManager) {
 }
 ```
 
+## Rive Integration Usage
+
+- The SDK provides a global Rive controller singleton, managed by `EmotionStrategyManager`.
+- You can get the controller via `emotionManager.getRiveController()` and use it in your Compose UI:
+
+```kotlin
+val emotionManager = EmotionStrategyManager.getInstance()
+val riveController = emotionManager.getRiveController()
+RiveAnimation(controller = riveController)
+```
+
+- When you call any of the following, the Rive animation will automatically update:
+    - `emotionManager.setEmotion(EmotionType.HAPPY)`
+    - `emotionManager.switchStrategy(...)`
+    - `emotionManager.updateUserInteraction(...)` 等
+
+- The mapping between `EmotionType` and Rive state is handled automatically. You only need to use the high-level API.
+
 ## Using in ViewModel
 
 ```kotlin
 class RobotViewModel : ViewModel() {
     private val emotionManager = EmotionStrategyManager.getInstance()
-    
-    // Expose emotion state for UI layer to observe
     val currentEmotion = emotionManager.currentEmotion
-    
-    // Get current emotion vector
     fun getCurrentEmotionVector() = emotionManager.getCurrentEmotionVector()
-    
-    // Business logic methods
-    fun handleUserRequest(isComplex: Boolean) {
-        emotionManager.updateUserInteraction(
-            if (isComplex) UserInteractionType.COMPLEX_QUERY 
-            else UserInteractionType.QUESTION
-        )
-        
-        // Process request...
-    }
-    
-    fun processTask(task: Task): Boolean {
-        // Process task...
-        val success = /* task processing result */ true
-        
-        // Update robot emotion
-        emotionManager.updateTaskCompletion(
-            success = success,
-            complexity = determineTaskComplexity(task)
-        )
-        
-        return success
-    }
-    
-    fun updateBatteryStatus(level: Int, isCharging: Boolean) {
-        emotionManager.updateBatteryStatus(level, isCharging)
-    }
-    
-    private fun determineTaskComplexity(task: Task): TaskComplexity {
-        // Determine complexity based on task characteristics
-        return when {
-            task.isSimple() -> TaskComplexity.LOW
-            task.isComplex() -> TaskComplexity.HIGH
-            else -> TaskComplexity.MEDIUM
-        }
-    }
+    fun getRiveController() = emotionManager.getRiveController()
+    // ... business logic as before
 }
 ```
 
